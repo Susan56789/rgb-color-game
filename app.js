@@ -26,6 +26,12 @@ levels.forEach(level =>{
 })
 
 
+//Attempt to make all the square have background color: rgb(280,45,255)
+const startButton = document.getElementById("reset");
+startButton.addEventListener("click", function (){
+    alert("you clicked me");
+} );
+
 }
 
 
