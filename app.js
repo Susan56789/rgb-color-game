@@ -7,6 +7,8 @@ const gElement = document.getElementById("g");
 const bElement = document.getElementById("b");
 
 const levels = Array.from (document.getElementsByClassName("mode"));
+const squares = Array.from(document.getElementsByClassName("square"));
+
 
 let gameLevel = levels.find((level) =>{
     const classList  = Array.from(level.classList)
@@ -29,7 +31,12 @@ levels.forEach(level =>{
 //Attempt to make all the square have background color: rgb(280,45,255)
 const startButton = document.getElementById("reset");
 startButton.addEventListener("click", function (){
-    alert("you clicked me");
+
+for (let i=0; i< squares.length; i++){
+    const square = squares[i];
+    square.style.backgroundColor="rgb(280,45,255)";
+}
+
 } );
 
 }
