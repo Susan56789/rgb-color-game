@@ -33,8 +33,13 @@ const startButton = document.getElementById("reset");
 startButton.addEventListener("click", function (){
 
 for (let i=0; i< squares.length; i++){
+
+    const red = Math.floor(Math.random()*256);    
+    const green = Math.floor(Math.random()*256);   
+    const blue = Math.floor(Math.random()*256);   
+
     const square = squares[i];
-    square.style.backgroundColor="rgb(280,45,255)";
+    square.style.backgroundColor=`rgb(${red}, ${green}, ${blue})`;
 }
 
 } );
