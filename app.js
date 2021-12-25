@@ -59,13 +59,24 @@ setHeaderRgbBackgroundColor(headerColorSquare);
 });
 
 function setHeaderRgbBackgroundColor(squareElement){
+     
+    const setHeaderElementBgColor = (rgbValues, element) =>{
+        const [r,g,b] = rgbValues;
+        element.style.backgroundColor = `rgb(${r}, ${g},${b})`
+    }
 
     const rgbString = squareElement.dataset.rgb_value;
     const  [red, green , blue ] = JSON.parse(rgbString);
     
     //console.table({red, green , blue} );
-
     
+    const redBackground = [red, 0,0];
+    const greenBackground = [0, green,0];
+    const blueBackground = [0, 0,blue];
+
+    setHeaderElementBgColor(redBackground, rElement);
+    setHeaderElementBgColor(greenBackground, gElement);
+    setHeaderElementBgColor(blueBackground, bElement);
     }
 
 }
