@@ -63,6 +63,9 @@ function setHeaderRgbBackgroundColor(squareElement){
     const setHeaderElementBgColor = (rgbValues, element) =>{
         const [r,g,b] = rgbValues;
         element.style.backgroundColor = `rgb(${r}, ${g},${b})`
+    element.innerHTML = rgbValues.find( rgbValue =>{
+        return rgbValue > 0;
+    })
     }
 
     const rgbString = squareElement.dataset.rgb_value;
