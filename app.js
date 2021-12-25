@@ -2,9 +2,10 @@ window.addEventListener('load', app, false);
 
 function app (){
 
-    const rElement = document.getElementById("r");
+const rElement = document.getElementById("r");
 const gElement = document.getElementById("g");
 const bElement = document.getElementById("b");
+const colorDisplayElement = document.getElementById("color-display");
 
 
 const levels = Array.from (document.getElementsByClassName("mode"));
@@ -33,7 +34,9 @@ levels.forEach(level =>{
 const startButton = document.getElementById("reset");
 
 startButton.addEventListener("click", function (){
+     this.innerHTML= 'New Colors';
 
+    //assign each individual square a background color
 for (let i=0; i< squares.length; i++){
 
     const red = Math.floor(Math.random()*256);    
@@ -70,7 +73,7 @@ function setHeaderRgbBackgroundColor(squareElement){
 
     const rgbString = squareElement.dataset.rgb_value;
     const  [red, green , blue ] = JSON.parse(rgbString);
-    
+    colorDisplayElement.dataset.rgb_value= rgbString;
     //console.table({red, green , blue} );
     
     const redBackground = [red, 0,0];
@@ -81,6 +84,33 @@ function setHeaderRgbBackgroundColor(squareElement){
     setHeaderElementBgColor(greenBackground, gElement);
     setHeaderElementBgColor(blueBackground, bElement);
     }
+
+//add event listener to squares so that it either disappears or change every squares's color
+squares.forEach(square =>{
+    square.addEventListener("click", function(){
+    const headerRgbValue = colorDisplayElement.dataset.rgb_value;
+    const squareRgbValue = this.dataset.rgb_value;
+
+   // console.table(headerRgbValue, squareRgbValue)
+
+   if (headerRgbValue === squareRgbValue){
+       setSquareBackgroundAfterWin(headerRgbValue);
+   } else{
+       this.classList.add("hidden");
+   }
+    } )
+})
+
+function setSquareBackgroundAfterWin(headerRgbString){
+ const [r, g, b] = JSON.parse(headerRgbString);
+ const rgbString = `rgb(${r}, ${g}, ${b})`;
+
+ squares.forEach(sq =>{
+     sq.classList.remove('hidden');
+     sq.style.backgroundColor = rgbString;
+ })
+}
+
 
 }
 
