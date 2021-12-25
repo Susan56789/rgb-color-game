@@ -9,7 +9,7 @@ const colorDisplayElement = document.getElementById("color-display");
 
 
 const levels = Array.from (document.getElementsByClassName("mode"));
-const squares = Array.from(document.getElementsByClassName("square"));
+
 
 
 let gameLevel = levels.find((level) =>{
@@ -19,6 +19,10 @@ let gameLevel = levels.find((level) =>{
 
 }).innerHTML;
 
+
+let squares = getSquares();
+
+
 levels.forEach(level =>{
     level.addEventListener("click", function() {
    levels.forEach(mode => mode.classList.remove("selected"));
@@ -26,9 +30,58 @@ levels.forEach(level =>{
    this.classList.add("selected");
 
    gameLevel = this.innerHTML;
+   setTilesAccordingToGameLevel(gameLevel);
+   squares = getSquares();
     })
 })
 
+
+function getSquares(){
+    const allSquares = Array.from(document.getElementsByClassName('square'));
+
+    if(gameLevel === 'Easy'){
+
+        return allSquares.slice(0,3);
+
+    }else if(gameLevel === 'Medium'){
+
+        return allSquares.slice(0,6);
+
+    }else{
+     
+      return allSquares;
+
+    }   
+}
+
+
+function setTilesAccordingToGameLevel(currentGameLavel){
+    const allSquares = Array.from(document.getElementsByClassName('square'));
+
+ if(currentGameLavel === 'Easy'){
+//set 3 squares on screen
+const firstSquares = allSquares.slice(0,3);
+const lastSquares= allSquares.slice(3,9);
+
+lastSquares.forEach(sq => sq.classList.add('hidden') );
+
+ } else if(currentGameLavel === 'Medium'){
+//set 6 squares on screen
+allSquares.forEach(sq => sq.classList.remove('hidden'));
+
+const firstSquares = allSquares.slice(0,6);
+const lastSquares= allSquares.slice(6,9);
+
+lastSquares.forEach(sq => sq.classList.add('hidden') );
+
+
+ }else{
+// set 9 squares on screen
+allSquares.forEach(sq => sq.classList.remove('hidden'))
+
+
+ }
+}
 
 //Attempt to make all the square have background color: rgb(280,45,255)
 const startButton = document.getElementById("reset");
@@ -55,7 +108,7 @@ for (let i=0; i< squares.length; i++){
 
 
 //assign the Header a random rgb value from one of the square values
-const randomSquareIndex = Math.floor(Math.random()*9);
+const randomSquareIndex = Math.floor(Math.random()* squares.length);
 const headerColorSquare = squares[randomSquareIndex];
 setHeaderRgbBackgroundColor(headerColorSquare);
 
@@ -86,10 +139,11 @@ function setHeaderRgbBackgroundColor(squareElement){
     }
 
 //add event listener to squares so that it either disappears or change every squares's color
-squares.forEach(square =>{
+const allSquares = Array.from(document.getElementsByClassName('square'));
+allSquares.forEach(square =>{
     square.addEventListener("click", function(){
     const headerRgbValue = colorDisplayElement.dataset.rgb_value;
-    const squareRgbValue = this.dataset.rgb_value;
+    let squareRgbValue = this.dataset.rgb_value;
 
    // console.table(headerRgbValue, squareRgbValue)
 
@@ -108,6 +162,7 @@ function setSquareBackgroundAfterWin(headerRgbString){
  squares.forEach(sq =>{
      sq.classList.remove('hidden');
      sq.style.backgroundColor = rgbString;
+     sq.dataset.rgb_value = colorDisplayElement.dataset.rgb_value;
  })
 }
 
