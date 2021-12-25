@@ -6,6 +6,7 @@ function app (){
 const gElement = document.getElementById("g");
 const bElement = document.getElementById("b");
 
+
 const levels = Array.from (document.getElementsByClassName("mode"));
 const squares = Array.from(document.getElementsByClassName("square"));
 
@@ -30,6 +31,7 @@ levels.forEach(level =>{
 
 //Attempt to make all the square have background color: rgb(280,45,255)
 const startButton = document.getElementById("reset");
+
 startButton.addEventListener("click", function (){
 
 for (let i=0; i< squares.length; i++){
@@ -39,10 +41,32 @@ for (let i=0; i< squares.length; i++){
     const blue = Math.floor(Math.random()*256);   
 
     const square = squares[i];
-    square.style.backgroundColor=`rgb(${red}, ${green}, ${blue})`;
+    
+    square.dataset.rgb_value= JSON.stringify([red, green, blue]);
+
+    const rgbString =`rgb(${red}, ${green}, ${blue})`;
+    
+    square.style.backgroundColor = rgbString;
+
 }
 
-} );
+
+//assign the Header a random rgb value from one of the square values
+const randomSquareIndex = Math.floor(Math.random()*9);
+const headerColorSquare = squares[randomSquareIndex];
+setHeaderRgbBackgroundColor(headerColorSquare);
+
+});
+
+function setHeaderRgbBackgroundColor(squareElement){
+
+    const rgbString = squareElement.dataset.rgb_value;
+    const  [red, green , blue ] = JSON.parse(rgbString);
+    
+    //console.table({red, green , blue} );
+
+    
+    }
 
 }
 
